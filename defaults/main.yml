@@ -1,0 +1,12 @@
+threeproxy_container_name: "3proxy"
+threeproxy_image_name: "3proxy/3proxy:latest"
+threeproxy_external_port: "3128"
+threeproxy_internal_port: "3128"
+threeproxy_volume_config:
+  host_path: "/opt/3proxy/conf"
+  docker_path: "/usr/local/3proxy/conf"
+threeproxy_users:
+  - name: user
+    password: password
+threeproxy_log_file: /logs/3proxy.log
+threeproxy_log_format: "- +_L%Y%m%d %H:%M:%S.%.  %N.%p %E %U %C:%c %R:%r %O %I %h %T"

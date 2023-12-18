@@ -1,0 +1,17 @@
+{% for user in threeproxy_users %}
+users {{ user.name }}:CL:{{ user.password }}
+{% endfor %}
+
+nscache 65536
+
+timeouts 1 5 30 60 180 1800 15 60
+
+log "{{ threeproxy_log_file }}"
+
+logformat "{{ threeproxy_log_format }}"
+auth strong
+flush
+{% for user in threeproxy_users %}
+allow {{ user.name }}
+{% endfor %}
+proxy -p{{ threeproxy_internal_port }}

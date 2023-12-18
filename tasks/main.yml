@@ -1,0 +1,19 @@
+- name: ensure config dir exists
+  file:
+    path: "{{ threeproxy_volume_config.host_path }}"
+    state: directory
+
+- name: copy config
+  template:
+    src: 3proxy.cfg.j2
+    dest: "{{ threeproxy_volume_config.host_path }}/3proxy.cfg"
+
+- name: deploy 3proxy
+  docker_container:
+    name: "{{ threeproxy_container_name }}"
+    image: "{{ threeproxy_image_name }}"
+    restart_policy: unless-stopped
+    ports:
+      - "{{ threeproxy_external_port }}:{{ threeproxy_internal_port }}"
+    volumes:
+      - "{{ threeproxy_volume_config.host_path }}:{{ threeproxy_volume_config.docker_path }}"
